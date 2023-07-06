@@ -68,3 +68,31 @@ export const foldersList=ref([{
     isRemovable:true,
 }]);
 
+
+export const tasksList=ref([
+    {
+    id:1,
+    folderID:1,
+    description:"Изучить JavaScript",
+    isCompleted:true,
+    },
+    {
+        id:2,
+        folderID:1,
+        description:"Изучить JavaScript 2",
+        isCompleted:false,
+    },
+    {
+        id:3,
+        folderID:1,
+        description:"Изучить JavaScript 3",
+        isCompleted:false,
+    },
+    {
+        id:4,
+        folderID:1,
+        description:"Изучить JavaScript 4",
+        isCompleted:false,
+    }
+])
+

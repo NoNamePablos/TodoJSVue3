@@ -6,6 +6,7 @@ import {foldersList} from "@/data/data";
 import FolderForm from "@/components/FolderForm.vue";
 import ModalDialog from "@/components/ModalDialog.vue";
 import {ref} from "vue";
+import BasePage from "@/pages/BasePage.vue";
 
 const addToFolder=(value)=>{
   console.log(value);
@@ -44,7 +45,9 @@ const openModal=()=>{
             </ModalDialog>
           </div>
         </AsideList>
-        <div class="todo-content">1233</div>
+        <div class="todo-content">
+          <BasePage/>
+        </div>
       </div>
   </AppLayout>
 </template>

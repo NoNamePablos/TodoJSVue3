@@ -1,6 +1,6 @@
 <template>
   <button :class="['button',`button--${type}`,`button-size--${size}`]">
-      <span>{{title}}<slot></slot></span>
+      <span>{{title}}</span>
   </button>
 </template>
 
@@ -20,7 +20,7 @@
         type:String,
         required:false,
 
-      }
+      },
     })
 </script>
 
@@ -33,6 +33,10 @@
       width: max-content;
       background: #F4F6F8;
       border-radius: 4px;
+      &:hover{
+        transition: all 0.3s ease-in-out;
+        opacity: 0.8;
+      }
       & span{
         width: 100%;
         text-align: center;
@@ -46,6 +50,12 @@
       &-size{
         &--full{
           width: 100%;
+        }
+      }
+      &--cancel{
+        background-color: #F4F6F8;
+        & span{
+          color: #9C9C9C;
         }
       }
       &--success{
