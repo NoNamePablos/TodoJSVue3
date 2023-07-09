@@ -2,21 +2,28 @@
 import AppLayout from "@/components/AppLayout.vue";
 import ListItem from "@/components/ListItem.vue";
 import AsideList from "@/components/AsideList.vue";
-import {foldersList} from "@/data/data";
 import FolderForm from "@/components/FolderForm.vue";
 import ModalDialog from "@/components/ModalDialog.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import BasePage from "@/pages/BasePage.vue";
-
+import {useFolderStore} from "@/stores/counter";
+import {router} from "@/router/router";
+const folderList=useFolderStore();
 const addToFolder=(value)=>{
-  console.log(value);
-  foldersList.value.push(value);
+  folderList.$patch((state)=>{
+    state.folders.push(value);
+  })
 }
 const modalSticky=ref(null);
 
 const openModal=()=>{
   modalSticky.value.open();
 }
+const redirectingPage=(value)=>{
+  router.push(`/${value}`);
+}
+
+
 </script>
 
 <template>
@@ -29,7 +36,7 @@ const openModal=()=>{
             </template>
           </ListItem>
           <div class="todo-aside__folders">
-            <ListItem v-for="item in foldersList" :id="item.id" :folder-color="item.folderColorID" :folder-title="item.folderTitle" :selected="item?.selected"/>
+            <ListItem v-for="item in folderList.getFolderList" @click="redirectingPage(item.id)" :id="item.id"  :folder-color="item.folderColorID" :folder-title="item.folderTitle" :selected="item?.selected"/>
           </div>
           <div class="todo-aside__add">
             <ListItem :folder-title="'Добавить папку'" size="full"  @click="openModal" :is-removable="false" :is-icon="true">
@@ -46,7 +53,7 @@ const openModal=()=>{
           </div>
         </AsideList>
         <div class="todo-content">
-          <BasePage/>
+          <router-view></router-view>
         </div>
       </div>
   </AppLayout>

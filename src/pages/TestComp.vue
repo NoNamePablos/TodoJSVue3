@@ -14,8 +14,11 @@
       </div>
     </div>
     <div class="page-list">
-      <div class="todo-list">
-        <TodoItem v-for="item in tasksList"  :item="item" />
+      <div class="todo-list"  v-if="taskList.length>0">
+        <TodoItem v-for="item in taskList" :item="item" />
+      </div>
+      <div class="todo-empty" v-else>
+        Пока задач нет!
       </div>
     </div>
     <div class="page-form">
@@ -37,27 +40,49 @@
 import AppButtonIcon from "@/components/UI/AppButtonIcon.vue";
 import AppInput from "@/components/UI/AppInput.vue";
 import ListItem from "@/components/ListItem.vue";
-import {defineComponent, onMounted, ref, watch} from "vue";
-import AppCheckbox from "@/components/UI/AppCheckbox.vue";
+import {computed, onBeforeUpdate, onMounted, onUpdated, ref,} from "vue";
 import TodoItem from "@/components/TodoItem.vue";
-import {tasksList} from "@/data/data";
-import AppButton from "@/components/UI/AppButton.vue";
 import FormTask from "@/components/Forms/FormTask.vue";
-import {router} from "@/router/router";
+import {useRoute} from "vue-router";
+import {useFolderStore, useTodoStore} from "@/stores/counter";
 
+const taskList=ref([]);
+const todoList=useTodoStore();
+const folderList=useFolderStore();
+const folder=ref(null);
+const route=useRoute();
 const pageName=ref('Фронтенд');
 const titleEditing=ref(false);
 const isOpenForm=ref(false);
-
+const currentRouteId = ref(null);
 const openForm=()=>{
   isOpenForm.value=true;
 }
 const closeFrom=()=>{
   isOpenForm.value=false;
 }
+
 const editTitle=()=>{
   titleEditing.value=!titleEditing.value;
 }
+onBeforeUpdate(()=>{
+  currentRouteId.value=route.params.id;
+  initPage();
+})
+const initPage=()=>{
+  folder.value=folderList.getFolderById(Number(currentRouteId.value));
+  pageName.value=folder.value.folderTitle;
+  taskList.value=todoList.getTodoListById(folder.value.id);
+}
+
+onMounted(()=>{
+  currentRouteId.value=route.params.id;
+  if(currentRouteId.value){
+    initPage();
+  }else{
+    console.log("all");
+  }
+})
 </script>
 
 <style lang="scss" scoped>

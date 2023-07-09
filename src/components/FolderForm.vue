@@ -22,16 +22,18 @@ import ColorRadio from "@/components/UI/ColorRadio.vue";
 import AppButton from "@/components/UI/AppButton.vue";
 import {ref, watch} from "vue";
 import {ColorTypeList, foldersList} from "@/data/data";
+import {useFolderStore} from "@/stores/counter";
 const colorFolder=ref("");
 const folderTitle=ref("");
 const folderColorID=ref(-1);
 watch(colorFolder,(newValue,oldValue)=>{
   folderColorID.value= +newValue;
 })
-const emit=defineEmits(['appendFolder'])
+const emit=defineEmits(['appendFolder']);
+const folderList=useFolderStore();
 const onSubmit=()=>{
     emit('appendFolder',{
-      id:foldersList.value.length+1,
+      id:folderList.getFolderLength+1,
       folderColorID:folderColorID.value,
       folderTitle:folderTitle.value,
       isRemovable:true,
