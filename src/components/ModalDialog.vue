@@ -6,6 +6,9 @@
         <div class="modal__wrapper">
           <div class="modal__body">
             <div class="modal__content">
+              <div class="modal__header" v-if="title">
+               {{title}}
+              </div>
               <slot></slot>
             </div>
             <button class="button button-icon modal__btn--close" @click="close">
@@ -33,6 +36,10 @@ import {onBeforeUnmount, onMounted, ref} from "vue";
       type:String,
       required:false,
       default:'body'
+    },
+    title:{
+      type:String,
+      required:false,
     }
   })
   const isOpen=ref(false)
@@ -90,6 +97,12 @@ import {onBeforeUnmount, onMounted, ref} from "vue";
     position: absolute;
     left: 0;
   }
+  &__header{
+    margin-bottom: 10px;
+    font-family: $font;
+    font-weight: 500;
+    font-size: 16px;
+  }
   &__body{
     position: relative;
     max-width: 250px;
@@ -98,6 +111,7 @@ import {onBeforeUnmount, onMounted, ref} from "vue";
     border-radius: 10px;
     padding: 18px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.05);
+    padding-top: 10px;
   }
   &__btn{
     &--close{

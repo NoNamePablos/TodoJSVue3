@@ -55,25 +55,31 @@ export  const useFolderStore=defineStore('folder',{
       folderColorID:2,
       folderTitle:'Фронтенд',
       isRemovable:true,
+      selected:false,
     },
     {
       id:3,
       folderColorID:3,
       folderTitle:'Фильмы и сериалы',
       isRemovable:true,
+      selected:false,
+
     },
     {
       id:4,
       folderColorID:4,
       folderTitle:'Книги',
       isRemovable:true,
+      selected:false,
+
     },
     {
       id:5,
       folderColorID:5,
       folderTitle:'Личное',
       isRemovable:true,
-    }
+      selected:false,
+      }
     ],
   }),
   getters: {
@@ -81,9 +87,17 @@ export  const useFolderStore=defineStore('folder',{
     getFolderLength:(state)=>state.folders.length,
     getFolderById:(state)=>{
       return (folderId)=>state.folders.find((folder)=>folder.id===folderId)
-    }
+    },
+
   },
   actions:{
-
+    setActiveFolder(id){
+      console.log("call id",id);
+      this.getFolderList.map((item)=>{
+        item.selected=false;
+        return item;
+      })
+      this.getFolderById(id).selected=true;
+    }
   }
 })

@@ -8,6 +8,7 @@ import {onMounted, ref} from "vue";
 import BasePage from "@/pages/BasePage.vue";
 import {useFolderStore} from "@/stores/counter";
 import {router} from "@/router/router";
+
 const folderList=useFolderStore();
 const addToFolder=(value)=>{
   folderList.$patch((state)=>{
@@ -20,9 +21,13 @@ const openModal=()=>{
   modalSticky.value.open();
 }
 const redirectingPage=(value)=>{
-  router.push(`/${value}`);
+  folderList.setActiveFolder(Number(value));
+  router.push(`/${Number(value)}`);
 }
 
+const removeFolder=(value)=>{
+  console.log(value);
+}
 
 </script>
 
@@ -36,7 +41,7 @@ const redirectingPage=(value)=>{
             </template>
           </ListItem>
           <div class="todo-aside__folders">
-            <ListItem v-for="item in folderList.getFolderList" @click="redirectingPage(item.id)" :id="item.id"  :folder-color="item.folderColorID" :folder-title="item.folderTitle" :selected="item?.selected"/>
+            <ListItem v-for="item in folderList.getFolderList" @delete="removeFolder"  @click="redirectingPage(item.id)" :key="item.id"  :folder-color="item.folderColorID" :folder-id="item.id" :folder-title="item.folderTitle" :selected="item?.selected"/>
           </div>
           <div class="todo-aside__add">
             <ListItem :folder-title="'Добавить папку'" size="full"  @click="openModal" :is-removable="false" :is-icon="true">
@@ -47,10 +52,13 @@ const redirectingPage=(value)=>{
                 </svg>
               </template>
             </ListItem>
-            <ModalDialog selector=".todo-aside__add" ref="modalSticky" position="sticky">
+            <ModalDialog selector=".todo-aside__add" title="Добавить папку" ref="modalSticky" position="sticky">
               <FolderForm @append-folder="addToFolder" />
             </ModalDialog>
           </div>
+          <ModalDialog title="Подтвердить действие" ref="modalAccess" >
+            фывфафы
+          </ModalDialog>
         </AsideList>
         <div class="todo-content">
           <router-view></router-view>
