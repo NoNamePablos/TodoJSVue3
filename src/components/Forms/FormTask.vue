@@ -2,7 +2,7 @@
   <form class="form-task" @submit.prevent>
     <AppInput v-model="textTask" :value="textTask" label="Текст задачи" />
     <div class="form-task__row">
-      <AppButton title="Добавить задачу" type="success" />
+      <AppButton title="Добавить задачу" type="success" @click="add"  />
       <AppButton title="Отмена" type="cancel" @click="cancel"/>
     </div>
   </form>
@@ -13,9 +13,13 @@ import {ref} from "vue";
 import AppButton from "@/components/UI/AppButton.vue";
 import AppInput from "@/components/UI/AppInput.vue";
 const textTask=ref("");
-const emit=defineEmits(['close'])
+const emit=defineEmits(['close','addTask'])
 const cancel=()=>{
   emit('close',true);
+}
+const add=()=>{
+  emit('addTask',textTask.value)
+  textTask.value="";
 }
 </script>
 

@@ -15,7 +15,7 @@
     </div>
     <div class="page-list">
       <div class="todo-list"  v-if="taskList.length>0">
-        <TodoItem v-for="item in taskList" :item="item" />
+        <TodoItem v-for="item in taskList" @remove="removeTask" :item="item" />
       </div>
       <div class="todo-empty" v-else>
         Пока задач нет!
@@ -30,7 +30,7 @@
           </svg>
         </template>
       </ListItem>
-      <FormTask @close="(value)=>{closeFrom()}" v-else/>
+      <FormTask @close="(value)=>{closeFrom()}"  @add-task="appendTask" v-else/>
     </div>
   </div>
 </template>
@@ -43,8 +43,13 @@ import ListItem from "@/components/ListItem.vue";
 import {computed, onBeforeUpdate, onMounted, onUpdated, ref,} from "vue";
 import TodoItem from "@/components/TodoItem.vue";
 import FormTask from "@/components/Forms/FormTask.vue";
-import {useRoute} from "vue-router";
+import {onBeforeRouteLeave, onBeforeRouteUpdate, useRoute} from "vue-router";
 import {useFolderStore, useTodoStore} from "@/stores/counter";
+
+onBeforeRouteUpdate((to,next)=>{
+  isOpenForm.value=false;
+})
+
 
 const taskList=ref([]);
 const todoList=useTodoStore();
@@ -55,6 +60,13 @@ const pageName=ref('Фронтенд');
 const titleEditing=ref(false);
 const isOpenForm=ref(false);
 const currentRouteId = ref(null);
+
+const removeTask=(value)=>{
+  console.log("remove item: ",value);
+  taskList.value=todoList.removeTodoItemById(value.id);
+}
+
+
 const openForm=()=>{
   isOpenForm.value=true;
 }
@@ -73,6 +85,11 @@ const initPage=()=>{
   folder.value=folderList.getFolderById(Number(currentRouteId.value));
   pageName.value=folder.value.folderTitle;
   taskList.value=todoList.getTodoListById(folder.value.id);
+
+}
+const appendTask=(value)=>{
+    taskList.value=todoList.appendTask(folder.value.id,value);
+  console.log("after appL ",todoList.getTodoList);
 }
 
 onMounted(()=>{

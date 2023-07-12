@@ -27,6 +27,12 @@ export const useTodoStore = defineStore('todo', {
         folderID:1,
         description:"Изучить JavaScript 4",
         isCompleted:false,
+      },
+      {
+        id:5,
+        folderID:2,
+        description:"Изучить JavaScript 5",
+        isCompleted:false,
       }
     ]
   }),
@@ -36,6 +42,42 @@ export const useTodoStore = defineStore('todo', {
       return (folderId)=>state.todos.filter((todo)=>{
         return todo.folderID==folderId;
       })
+    },
+    getTodoItemById:(state)=>{
+      return(todoId)=>state.todos.find((todo)=>{
+        return todo.id===todoId;
+      })
+    }
+  },
+  actions:{
+    removeTodoListById(id){
+      console.log("id: ",id);
+     this.todos= this.getTodoList.filter(item=>{
+        return item.folderID!==id;
+      });
+      console.log("this todos: ",this.todos);
+    },
+    removeTodoItemById(id){
+      const indx = this.getTodoList.findIndex(v => v.id === id);
+      this.getTodoList.splice(indx, indx >= 0 ? 1 : 0);
+      return this.getTodoList;
+    },
+
+    appendTask(id,value){
+      this.getTodoList.push(
+          {
+            id:this.getTodoList.length+1,
+            folderID:id,
+            description:value,
+            isCompleted:false,
+          }
+      )
+      return this.getTodoList;
+    },
+    completedTask(id,status){
+      this.getTodoItemById(id).isCompleted=status;
+      console.log("id item: ",id);
+      console.log("item changed: ",this.getTodoItemById(id));
     }
   }
 })
@@ -92,12 +134,22 @@ export  const useFolderStore=defineStore('folder',{
   },
   actions:{
     setActiveFolder(id){
-      console.log("call id",id);
-      this.getFolderList.map((item)=>{
-        item.selected=false;
-        return item;
-      })
-      this.getFolderById(id).selected=true;
+      try {
+        if (!this.getFolderById(id)) return;
+        this.getFolderList.map((item)=>{
+          item.selected=false;
+          return item;
+        })
+        this.getFolderById(id).selected=true;
+      }catch (e){
+        console.log(e)
+      }
+    },
+    removeFolderById(id){
+      const todoStore = useTodoStore();
+      const indx = this.getFolderList.findIndex(v => v.id === id);
+      todoStore.removeTodoListById(id);
+      this.getFolderList.splice(indx, indx >= 0 ? 1 : 0);
     }
   }
 })

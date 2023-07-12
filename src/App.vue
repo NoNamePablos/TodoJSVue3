@@ -26,7 +26,8 @@ const redirectingPage=(value)=>{
 }
 
 const removeFolder=(value)=>{
-  console.log(value);
+  console.log("folder del: ",value);
+  folderList.removeFolderById(value);
 }
 
 </script>
@@ -56,9 +57,6 @@ const removeFolder=(value)=>{
               <FolderForm @append-folder="addToFolder" />
             </ModalDialog>
           </div>
-          <ModalDialog title="Подтвердить действие" ref="modalAccess" >
-            фывфафы
-          </ModalDialog>
         </AsideList>
         <div class="todo-content">
           <router-view></router-view>

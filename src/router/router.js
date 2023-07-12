@@ -9,6 +9,7 @@ export const router = createRouter({
         {
             path: '/',
             component:TestComp,
+
         },
         {
             path: '/:id',
