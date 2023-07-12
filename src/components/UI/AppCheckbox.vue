@@ -4,7 +4,7 @@
       <div class="custom-checkbox__checkbox">
       <input type="checkbox"
              :checked="isChecked"
-
+             @change="updateValue($event.target.checked)"
       >
       <div class="custom-checkbox__fake"></div>
       </div>
@@ -32,11 +32,9 @@ const props= defineProps({
     }
   })
   const emit=defineEmits(['update:modelValue']);
-  const updateValue=(event)=>{
-    console.log("before: ",isChecked.value);
-    isChecked.value=event.target.checked;
-    console.log("after: ",isChecked.value);
-    emit('update:modelValue',isChecked.value);
+  const updateValue=(value)=>{
+    console.log("value: ",value);
+    emit('update:modelValue',value);
   }
   const isChecked = computed(() => {
     if(props.defaultCheck){
