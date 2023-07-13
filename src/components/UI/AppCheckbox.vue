@@ -38,7 +38,7 @@ const props= defineProps({
   }
   const isChecked = computed(() => {
     if(props.defaultCheck){
-      updateValue(props.value);
+      updateValue(props.modelValue);
       return true;
     }
     return props.modelValue === props.value;

@@ -2,12 +2,11 @@
 import AppLayout from "@/components/AppLayout.vue";
 import ListItem from "@/components/ListItem.vue";
 import AsideList from "@/components/AsideList.vue";
-import FolderForm from "@/components/FolderForm.vue";
 import ModalDialog from "@/components/ModalDialog.vue";
-import {onMounted, ref} from "vue";
-import BasePage from "@/pages/BasePage.vue";
+import {ref} from "vue";
 import {useFolderStore} from "@/stores/counter";
 import {router} from "@/router/router";
+import FormFolder from "@/components/Forms/FormFolder.vue";
 
 const folderList=useFolderStore();
 const addToFolder=(value)=>{
@@ -54,7 +53,7 @@ const removeFolder=(value)=>{
               </template>
             </ListItem>
             <ModalDialog selector=".todo-aside__add" title="Добавить папку" ref="modalSticky" position="sticky">
-              <FolderForm @append-folder="addToFolder" />
+              <FormFolder @append-folder="addToFolder" />
             </ModalDialog>
           </div>
         </AsideList>
@@ -69,6 +68,7 @@ const removeFolder=(value)=>{
     .todo{
       display: grid;
       grid-template-columns: 300px 1fr;
+      height: 100%;
     }
 
     .todo-content{

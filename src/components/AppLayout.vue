@@ -10,8 +10,6 @@
 
 <style lang="scss" scoped>
 .container{
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
+  height: 100%;
 }
 </style>

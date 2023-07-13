@@ -32,14 +32,15 @@ watch(colorFolder,(newValue,oldValue)=>{
 const emit=defineEmits(['appendFolder']);
 const folderList=useFolderStore();
 const onSubmit=()=>{
-    emit('appendFolder',{
-      id:folderList.getFolderLength+1,
-      folderColorID:folderColorID.value,
-      folderTitle:folderTitle.value,
-      isRemovable:true,
-    });
-  folderTitle.value="";
-
+    if(folderTitle.value!==""){
+      emit('appendFolder',{
+        id:folderList.getFolderLength+1,
+        folderColorID:folderColorID.value,
+        folderTitle:folderTitle.value,
+        isRemovable:true,
+      });
+      folderTitle.value="";
+    }
 }
 </script>
 

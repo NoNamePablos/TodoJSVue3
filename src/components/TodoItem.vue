@@ -12,21 +12,21 @@
 </template>
 
 <script setup>
-import {ref, watch} from "vue";
+import {ref, toRaw, toRef, watch} from "vue";
 import AppCheckbox from "@/components/UI/AppCheckbox.vue";
-import {tasksList} from "@/data/data";
 import AppButtonIcon from "@/components/UI/AppButtonIcon.vue";
 const checked=ref(false);
-const emit =defineEmits(['remove'])
+const emit =defineEmits(['remove','checked'])
 const props=defineProps({
   item:{
     type:Object,
     required:true,
   }
 })
+const item=toRaw(props.item)
 watch(checked,(newValue,oldValue)=>{
-  console.log(tasksList.value.find((it)=>it.id===props.item?.id))
-  console.log(tasksList.value);
+  item.isCompleted=newValue;
+  emit('checked',{id:item.id,isCompleted:newValue});
 })
 
 </script>

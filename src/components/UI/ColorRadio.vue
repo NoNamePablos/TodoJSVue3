@@ -51,6 +51,7 @@
 
 <style lang="scss" scoped>
   .color-radio{
+    cursor: pointer;
     & input{
       width: 1px;
       height: 1px;
@@ -70,6 +71,7 @@
       height: 20px;
       border-radius: 100%;
       border:2px solid transparent;
+      cursor: pointer;
     }
   }
 </style>

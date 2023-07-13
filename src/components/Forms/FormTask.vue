@@ -18,8 +18,10 @@ const cancel=()=>{
   emit('close',true);
 }
 const add=()=>{
-  emit('addTask',textTask.value)
-  textTask.value="";
+  if(textTask.value!==""){
+    emit('addTask',textTask.value)
+    textTask.value="";
+  }
 }
 </script>
 

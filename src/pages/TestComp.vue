@@ -4,7 +4,7 @@
       <div class="page-title__container">
         <div :class="['page-title__edited',{'page-title__edited--full':titleEditing}]">
           <h1 v-if="!titleEditing">{{pageName}}</h1>
-          <AppInput v-else v-model="pageName" :value="pageName" label="Название папки" />
+          <AppInput v-else v-model="pageTitle" :value="pageTitle" label="Название папки" />
         </div>
         <AppButtonIcon type="transparent" @click="editTitle">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 15 15" fill="none">
@@ -15,7 +15,7 @@
     </div>
     <div class="page-list">
       <div class="todo-list"  v-if="taskList.length>0">
-        <TodoItem v-for="item in taskList" @remove="removeTask" :item="item" />
+        <TodoItem v-for="item in taskList" @checked="changeCompleteStatus" @remove="removeTask" :item="item" />
       </div>
       <div class="todo-empty" v-else>
         Пока задач нет!
@@ -66,6 +66,11 @@ const removeTask=(value)=>{
   taskList.value=todoList.removeTodoItemById(value.id);
 }
 
+const changeCompleteStatus=(value)=>{
+  console.log("change Stat befiore: ",value);
+  todoList.completedTask(value.id,value.isCompleted);
+  console.log("change state after: ",todoList.getTodoList);
+}
 
 const openForm=()=>{
   isOpenForm.value=true;
@@ -73,7 +78,14 @@ const openForm=()=>{
 const closeFrom=()=>{
   isOpenForm.value=false;
 }
-
+const pageTitle=computed({
+  get(){
+    return pageName.value
+  },
+  set(newValue){
+    pageName.value=folderList.setTitle(Number(currentRouteId.value),newValue).folderTitle;
+  }
+})
 const editTitle=()=>{
   titleEditing.value=!titleEditing.value;
 }

@@ -145,6 +145,16 @@ export  const useFolderStore=defineStore('folder',{
         console.log(e)
       }
     },
+    setTitle(id,title){
+      try {
+        if (!this.getFolderById(id)) return;
+        const item=this.getFolderList.find((item)=> item.id===id);
+        item.folderTitle=title;
+        return item;
+      }catch (e){
+        console.log(e)
+      }
+    },
     removeFolderById(id){
       const todoStore = useTodoStore();
       const indx = this.getFolderList.findIndex(v => v.id === id);

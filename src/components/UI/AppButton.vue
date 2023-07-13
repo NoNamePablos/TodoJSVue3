@@ -33,6 +33,7 @@
       width: max-content;
       background: #F4F6F8;
       border-radius: 4px;
+      cursor: pointer;
       &:hover{
         transition: all 0.3s ease-in-out;
         opacity: 0.8;
