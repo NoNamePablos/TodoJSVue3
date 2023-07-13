@@ -55,20 +55,14 @@ import {onBeforeUnmount, onMounted, ref} from "vue";
     open
   })
   const externalClick=(e)=>{
-    console.log("e clicked:")
     if(!e.target.closest('.modal')){
       close();
     }
   }
   onMounted(()=>{
     isMounted.value=true;
-    //window.addEventListener('click',externalClick)
-
   })
-  onBeforeUnmount(()=>{
-    //window.removeEventListener('click',externalClick)
 
-  })
 </script>
 
 <style lang="scss" scoped>

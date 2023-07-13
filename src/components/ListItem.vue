@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref, toRef, watch} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {getColor} from "@/data/data";
 
 const emit=defineEmits(['delete'])

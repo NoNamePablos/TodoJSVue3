@@ -16,13 +16,10 @@
 </template>
 
 <script setup>
-import AppInput from "@/components/UI/AppInput.vue";
-import ColorList from "@/components/ColorList.vue";
-import ColorRadio from "@/components/UI/ColorRadio.vue";
-import AppButton from "@/components/UI/AppButton.vue";
 import {ref, watch} from "vue";
 import {ColorTypeList, foldersList} from "@/data/data";
 import {useFolderStore} from "@/stores/counter";
+import ColorList from "@/components/ColorList.vue";
 const colorFolder=ref("");
 const folderTitle=ref("");
 const folderColorID=ref(-1);

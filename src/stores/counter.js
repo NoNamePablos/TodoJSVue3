@@ -130,6 +130,10 @@ export  const useFolderStore=defineStore('folder',{
     getFolderById:(state)=>{
       return (folderId)=>state.folders.find((folder)=>folder.id===folderId)
     },
+    getFolderLastAdded:(state)=>{
+      return state.folders[state.folders.length-1];
+    },
+    getFolderActive:(state)=>state.folders.find(item=>item.selected===true)
 
   },
   actions:{

@@ -15,7 +15,6 @@
 
 <script setup>
   import {computed} from "vue";
-  import App from "@/App.vue";
 
 const props= defineProps({
     text:{
@@ -33,7 +32,6 @@ const props= defineProps({
   })
   const emit=defineEmits(['update:modelValue']);
   const updateValue=(value)=>{
-    console.log("value: ",value);
     emit('update:modelValue',value);
   }
   const isChecked = computed(() => {

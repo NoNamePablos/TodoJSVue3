@@ -5,7 +5,8 @@
 </template>
 
 <script setup>
-
+  import {ref} from "vue";
+  const isContainer=ref(true);
 </script>
 
 <style lang="scss" scoped>

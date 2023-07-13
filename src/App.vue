@@ -1,11 +1,10 @@
 <script setup>
-import AppLayout from "@/components/AppLayout.vue";
-import ListItem from "@/components/ListItem.vue";
-import AsideList from "@/components/AsideList.vue";
-import ModalDialog from "@/components/ModalDialog.vue";
 import {ref} from "vue";
 import {useFolderStore} from "@/stores/counter";
 import {router} from "@/router/router";
+import ListItem from "@/components/ListItem.vue";
+import AsideList from "@/components/AsideList.vue";
+import ModalDialog from "@/components/ModalDialog.vue";
 import FormFolder from "@/components/Forms/FormFolder.vue";
 
 const folderList=useFolderStore();
@@ -13,6 +12,7 @@ const addToFolder=(value)=>{
   folderList.$patch((state)=>{
     state.folders.push(value);
   })
+  redirectingPage(folderList.getFolderLastAdded.id);
 }
 const modalSticky=ref(null);
 
@@ -25,23 +25,23 @@ const redirectingPage=(value)=>{
 }
 
 const removeFolder=(value)=>{
-  console.log("folder del: ",value);
   folderList.removeFolderById(value);
-}
+  if(folderList.getFolderList.length>0){
+    redirectingPage(folderList.getFolderList[0].id);
+  }
 
+}
 </script>
 
 <template>
   <AppLayout>
       <div class="todo">
         <AsideList>
-          <ListItem :folder-title="'Все задачи'" :is-removable="false" :is-icon="true" >
-            <template #icon>
-              <img src="./assets/img/entypo-list.svg" alt="">
-            </template>
-          </ListItem>
           <div class="todo-aside__folders">
-            <ListItem v-for="item in folderList.getFolderList" @delete="removeFolder"  @click="redirectingPage(item.id)" :key="item.id"  :folder-color="item.folderColorID" :folder-id="item.id" :folder-title="item.folderTitle" :selected="item?.selected"/>
+            <ListItem v-if="folderList.getFolderLength>0"  v-for="item in folderList.getFolderList" @delete="removeFolder"  @click="redirectingPage(item.id)" :key="item.id"  :folder-color="item.folderColorID" :folder-id="item.id" :folder-title="item.folderTitle" :selected="item?.selected"/>
+            <div v-else>
+              Добавить пожалуйста папку!
+            </div>
           </div>
           <div class="todo-aside__add">
             <ListItem :folder-title="'Добавить папку'" size="full"  @click="openModal" :is-removable="false" :is-icon="true">
@@ -52,6 +52,7 @@ const removeFolder=(value)=>{
                 </svg>
               </template>
             </ListItem>
+
             <ModalDialog selector=".todo-aside__add" title="Добавить папку" ref="modalSticky" position="sticky">
               <FormFolder @append-folder="addToFolder" />
             </ModalDialog>
@@ -70,10 +71,7 @@ const removeFolder=(value)=>{
       grid-template-columns: 300px 1fr;
       height: 100%;
     }
-
     .todo-content{
       padding: 55px;
     }
-
-
 </style>

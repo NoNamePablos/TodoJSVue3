@@ -10,8 +10,6 @@
 
 <script setup>
 import {ref} from "vue";
-import AppButton from "@/components/UI/AppButton.vue";
-import AppInput from "@/components/UI/AppInput.vue";
 const textTask=ref("");
 const emit=defineEmits(['close','addTask'])
 const cancel=()=>{
