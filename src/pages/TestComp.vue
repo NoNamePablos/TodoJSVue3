@@ -4,7 +4,9 @@
         <PageTitle @change-title="changeTitle" :title="pageName"/>
         <div class="page-list" >
           <div class="todo-list"  v-if="taskList.length>0">
-            <TodoItem v-for="item in taskList" :key="item.id"  @checked="changeCompleteStatus" @remove="removeTask" :item="item" />
+            <transition-group name="t-list">
+              <TodoItem v-for="item in taskList" :key="item.id"  @checked="changeCompleteStatus" @remove="removeTask" :item="item" />
+            </transition-group>
           </div>
           <PageEmpty text="Пока задач нет!" v-else />
         </div>
@@ -121,5 +123,15 @@ onBeforeMount(()=>{
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+.t-list-enter-active,
+.t-list-leave-active {
+  transition: all 0.5s ease;
+
+}
+.t-list-enter-from,
+.t-list-leave-to {
+  opacity: 0;
+  transform:translateX(30px);
 }
 </style>
