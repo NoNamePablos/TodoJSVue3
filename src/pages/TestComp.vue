@@ -28,7 +28,6 @@
 
 <script setup>
 
-//TODO Пустой компонент todo-empty,page-empty вынести в отдельный компонент
 
 import {computed, onBeforeMount, onBeforeUpdate, ref,} from "vue";
 import ListItem from "@/components/ListItem.vue";
@@ -80,10 +79,9 @@ const initPage=()=>{
     try {
       currentRouteId.value=route.params.id;
       folder.value=folderList.getFolderActive;
-      console.log("folder.val: ",folder.value);
-        pageName.value=folder.value.folderTitle;
-        taskList.value=todoList.getTodoListById(folder.value.id);
-        isEmpty.value=false;
+      pageName.value=folder.value.folderTitle;
+      taskList.value=todoList.getTodoListById(folder.value.id);
+      isEmpty.value=false;
     }catch (e) {
       console.log(e);
     }

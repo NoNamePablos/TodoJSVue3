@@ -1,6 +1,6 @@
 <template>
-  <div class="custom-input">
-    <input type="text" :placeholder="label" :value="value" @input="updateValue($event.target.value)">
+  <div :class="['custom-input',`custom-input--${size}`]">
+    <input type="text" v-focus :placeholder="label" :value="value" @input="updateValue($event.target.value)">
   </div>
 </template>
 
@@ -14,8 +14,8 @@
       type:String,
       required:false,
     },
-    isBig:{
-      type:Boolean,
+    size:{
+      type:String,
       required:false,
     }
   })
@@ -47,6 +47,16 @@
       letter-spacing: 0.15px;
       &:placeholder-shown,&::placeholder{
         color: #C7C7C7;
+      }
+      &:focus,&:focus-visible{
+        transition: all 0.3s ease-in-out;
+        border: 1px solid green;
+      }
+    }
+    &--big{
+      & input{
+        font-size: 18px;
+        padding: 15px 10px;
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <form class="folder-form" @submit.prevent="onSubmit">
-    <AppInput v-model="folderTitle" :value="folderTitle" label="Название папки" />
+    <AppInput v-focus  v-model="folderTitle" :value="folderTitle" label="Название папки" />
     <ColorList>
       <ColorRadio v-for="color in ColorTypeList"
                   v-model="colorFolder"

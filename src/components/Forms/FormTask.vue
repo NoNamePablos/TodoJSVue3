@@ -1,6 +1,6 @@
 <template>
   <form class="form-task" @submit.prevent>
-    <AppInput v-model="textTask" :value="textTask" label="Текст задачи" />
+    <AppInput v-model="textTask" size="big" v-focus :value="textTask" label="Текст задачи"  />
     <div class="form-task__row">
       <AppButton title="Добавить задачу" type="success" @click="add"  />
       <AppButton title="Отмена" type="cancel" @click="cancel"/>
