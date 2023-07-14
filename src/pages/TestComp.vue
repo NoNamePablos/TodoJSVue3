@@ -4,11 +4,9 @@
         <PageTitle @change-title="changeTitle" :title="pageName"/>
         <div class="page-list" >
           <div class="todo-list"  v-if="taskList.length>0">
-            <TodoItem v-for="item in taskList" @checked="changeCompleteStatus" @remove="removeTask" :item="item" />
+            <TodoItem v-for="item in taskList" :key="item.id"  @checked="changeCompleteStatus" @remove="removeTask" :item="item" />
           </div>
-          <div class="todo-empty" v-else>
-            Пока задач нет!
-          </div>
+          <PageEmpty text="Пока задач нет!" v-else />
         </div>
         <div class="page-form" >
           <ListItem :folder-title="'Добавить задачу'"  @click="openForm" :is-removable="false" :is-icon="true" v-if="!isOpenForm">
@@ -22,7 +20,7 @@
           <FormTask @close="(value)=>{closeFrom()}"  @add-task="appendTask" v-else/>
         </div>
       </div>
-      <div class="page-empty" v-else>Добавьте пожалуйста папку)</div>
+    <PageEmpty text="Добавить пожалуйста папку!"  v-else />
   </div>
 </template>
 
@@ -38,6 +36,7 @@ import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import {useFolderStore, useTodoStore} from "@/stores/counter";
 import {router} from "@/router/router";
 import PageTitle from "@/components/page/PageTitle.vue";
+import PageEmpty from "@/components/page/PageEmpty.vue";
 
 onBeforeRouteUpdate((to,from,next)=>{
   isOpenForm.value=false;
@@ -59,7 +58,8 @@ const isOpenForm=ref(false);
 const currentRouteId = ref(null);
 
 const removeTask=(value)=>{
-  taskList.value=todoList.removeTodoItemById(value.id);
+ todoList.removeTodoItemById(value.id);
+ taskList.value=todoList.getTodoListById(folder.value.id);
 }
 const changeTitle=(value)=>{
   pageName.value=folderList.setTitle(Number(currentRouteId.value),value).folderTitle;

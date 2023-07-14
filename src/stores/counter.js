@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useTodoStore = defineStore('todo', {
@@ -51,16 +50,13 @@ export const useTodoStore = defineStore('todo', {
   },
   actions:{
     removeTodoListById(id){
-      console.log("id: ",id);
      this.todos= this.getTodoList.filter(item=>{
         return item.folderID!==id;
       });
-      console.log("this todos: ",this.todos);
     },
     removeTodoItemById(id){
       const indx = this.getTodoList.findIndex(v => v.id === id);
-      this.getTodoList.splice(indx, indx >= 0 ? 1 : 0);
-      return this.getTodoList;
+      this.getTodoList.splice(indx,1);
     },
 
     appendTask(id,value){
@@ -76,8 +72,6 @@ export const useTodoStore = defineStore('todo', {
     },
     completedTask(id,status){
       this.getTodoItemById(id).isCompleted=status;
-      console.log("id item: ",id);
-      console.log("item changed: ",this.getTodoItemById(id));
     }
   }
 })

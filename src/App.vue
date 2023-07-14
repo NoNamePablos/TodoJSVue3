@@ -6,6 +6,7 @@ import ListItem from "@/components/ListItem.vue";
 import AsideList from "@/components/AsideList.vue";
 import ModalDialog from "@/components/ModalDialog.vue";
 import FormFolder from "@/components/Forms/FormFolder.vue";
+import PageEmpty from "@/components/page/PageEmpty.vue";
 
 const folderList=useFolderStore();
 const addToFolder=(value)=>{
@@ -28,6 +29,8 @@ const removeFolder=(value)=>{
   folderList.removeFolderById(value);
   if(folderList.getFolderList.length>0){
     redirectingPage(folderList.getFolderList[0].id);
+  }else{
+    router.push(`/`);
   }
 
 }
@@ -39,9 +42,7 @@ const removeFolder=(value)=>{
         <AsideList>
           <div class="todo-aside__folders">
             <ListItem v-if="folderList.getFolderLength>0"  v-for="item in folderList.getFolderList" @delete="removeFolder"  @click="redirectingPage(item.id)" :key="item.id"  :folder-color="item.folderColorID" :folder-id="item.id" :folder-title="item.folderTitle" :selected="item?.selected"/>
-            <div v-else>
-              Добавить пожалуйста папку!
-            </div>
+            <PageEmpty text="Добавить пожалуйста папку!" size="small" v-else />
           </div>
           <div class="todo-aside__add">
             <ListItem :folder-title="'Добавить папку'" size="full"  @click="openModal" :is-removable="false" :is-icon="true">
